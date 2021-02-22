@@ -1,5 +1,18 @@
 #!/usr/bin/env python3
 
+'''
+FROM LECTURE VIDEO
+LPH      Celcius
+F_h      T_h_i      T_h_o | F_c      T_c_i       T_c_o
+
+75       58.2       38.6    50       19.7        39.7
+         57.7       34.1             16.8        35.5
+         57.7       35.6             17.0        37.0
+         57.8       36.8             17.3        38.2
+
+Repeat for different F_h/F_c and DTC
+'''
+
 # Known Parameters
 L = 0.75 # meters (length of tube)
 N = 23   # number of tubes

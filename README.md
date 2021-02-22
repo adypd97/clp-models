@@ -4,5 +4,6 @@
 	- Usage: 
 	```console 
 	~$ cd exp1/
-	~$ python3 main.py
+	~$ python3 main.py > result.txt
+	~$ cat result.txt
 	```  
