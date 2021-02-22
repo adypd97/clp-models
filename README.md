@@ -1,2 +1,3 @@
 # clp-models
-Computational models for CLP301 IIT Delhi
+- Exp 1 : __Shell and Tube Heat Exchanger Model__
+	see ```./exp1/```  
