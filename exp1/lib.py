@@ -16,8 +16,8 @@ def A(D,N,L):
     return math.pi * D * N * L
 
 def correction_params(T_c_i, T_c_o, T_h_i, T_h_o, flag=1):
-    r = round(abs((T_c_i - T_c_o)/ (T_h_o - T_h_i)), 2)
-    p = round(abs((T_h_o - T_h_i) / (T_c_i - T_h_i)), 2)
+    r = round(abs((T_h_o - T_h_i)/(T_c_i - T_c_o)), 2)
+    p = round(abs((T_c_o - T_c_i) / (T_h_i - T_c_i)), 2)
     if flag :
         return r
     else:
