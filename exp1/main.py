@@ -23,9 +23,10 @@ def test_main():
     e = test_ntu_method()
     print(f'U : {u}')
     print(f'Effectivness : {e}')
-    print(correction_params(T_c_i, T_c_o, T_h_i, T_h_o,0))
-    print(correction_params(T_c_i, T_c_o, T_h_i, T_h_o,1))
-          
+    for i in range(4):
+        print('p ' + str(correction_params(T_c_i[i], T_c_o[i], T_h_i[i], T_h_o[i],0)))
+        print('r ' + str(correction_params(T_c_i[i], T_c_o[i], T_h_i[i], T_h_o[i],1)))
+
 
 
 if __name__ == "__main__":
