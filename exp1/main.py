@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from lib import U, ntu_method
+from lib import U, ntu_method, correction_params
 from params import T_h_i, T_h_o, T_c_i , T_c_o, D_o, N, L, m_h, m_c, c_p
 import math
 
@@ -23,6 +23,9 @@ def test_main():
     e = test_ntu_method()
     print(f'U : {u}')
     print(f'Effectivness : {e}')
+    print(correction_params(T_c_i, T_c_o, T_h_i, T_h_o,0))
+    print(correction_params(T_c_i, T_c_o, T_h_i, T_h_o,1))
+          
 
 
 if __name__ == "__main__":
