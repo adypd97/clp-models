@@ -25,7 +25,7 @@ def correction_params(T_c_i, T_c_o, T_h_i, T_h_o, flag=1):
 
 def U(m, c, T_h_in, T_h_out, T_c_in, T_c_out, D, N, L, ):
     ''' Heat Transfer Coefficient (U)'''
-    # TODO: r and p are incorrect (both > 1)
+    # TODO: r and p are incorrect (both > 1)  -- Corrected (r can be more than 1, p corrected)
     #r = correction_params(T_c_in , T_c_out,  T_h_out, T_h_in)
     #p = correction_params(T_c_in , T_c_out,  T_h_out, T_h_in, 0)
     F = 0.5 # temp fix
