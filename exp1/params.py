@@ -39,7 +39,8 @@ c_p = { 0.01 : 4.2199,
                         # at temperature Celsius(key), units
                         # kJ/(kg K)
 '''
-c_p = 4.18 # constant (assumed), kJ/Kg*K
+c_p = 4180 # constant (assumed), J/Kg*K
 
-m_h = 75  # flow rate for hot water
-m_c = 50  # flow rate for cold water
+rho = 998  # water, kg/m^3
+m_h = 0.075 * rho  # flow rate for hot water  (kg/s)
+m_c = 0.050 * rho  # flow rate for cold water (kg/s)

@@ -15,6 +15,8 @@ def LMTD(T1, T2, T3, T4):
 def A(D,N,L):
     return math.pi * D * N * L
 
+def solve_outlet_temp(T_h_i, T_c_i, m_h, m_c):
+    
 def correction_params(T_c_i, T_c_o, T_h_i, T_h_o, flag=1):
     r = round(abs((T_c_i - T_c_o)/ (T_h_o - T_h_i)), 2)
     p = round(abs((T_h_o - T_h_i) / (T_c_i - T_h_i)), 2)
@@ -38,11 +40,17 @@ def C(m, c_p):
 
 def get_C_min(m_h, m_c, c_p):
     C_h, C_c = C(m_h, c_p), C(m_c, c_p)
-    return C_h if C_h - C_c < 0 else C_c
+    return min(C_h, C_c)
+
+def get_C_max(m_h, m_c, c_p):
+    C_h, C_c = C(m_h, c_p), C(m_c, c_p)
+    return max(C_h, C_c)
 
 def max_Q(m_h, m_c, T_h_in, T_c_in, c_p):
     return get_C_min(m_h, m_c, c_p) * (T_h_in - T_c_in)
 
+'''
+DEPRECIATE
 def ntu_method(m_h, m_c, c_p, T_h_i, T_h_o, T_c_i, T_c_o):
     EPS = 1e-6
     C_min = get_C_min(m_h, m_c, c_p)
@@ -52,7 +60,10 @@ def ntu_method(m_h, m_c, c_p, T_h_i, T_h_o, T_c_i, T_c_o):
         return abs(T_h_i - T_h_o) / (T_h_i - T_c_i)
     elif abs(C_min - C_c) < EPS:
         return abs(T_c_i - T_c_o) / (T_h_i - T_c_i)
+'''
 
+def c_ratio(m_h, m_c, c_p):
+    return get_C_min(m_h, m_c, c_p) / get_C_max(m_h, m_c, c_p) 
 
 
 
