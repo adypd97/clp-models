@@ -16,6 +16,7 @@ def A(D,N,L):
     return math.pi * D * N * L
 
 def solve_outlet_temp(T_h_i, T_c_i, m_h, m_c):
+    pass
     
 def correction_params(T_c_i, T_c_o, T_h_i, T_h_o, flag=1):
     r = round(abs((T_h_o - T_h_i)/(T_c_i - T_c_o)), 2)
@@ -50,7 +51,8 @@ def max_Q(m_h, m_c, T_h_in, T_c_in, c_p):
     return get_C_min(m_h, m_c, c_p) * (T_h_in - T_c_in)
 
 '''
-DEPRECIATE
+DEPRECIATE (TODO)
+'''
 def ntu_method(m_h, m_c, c_p, T_h_i, T_h_o, T_c_i, T_c_o):
     EPS = 1e-6
     C_min = get_C_min(m_h, m_c, c_p)
@@ -60,7 +62,6 @@ def ntu_method(m_h, m_c, c_p, T_h_i, T_h_o, T_c_i, T_c_o):
         return abs(T_h_i - T_h_o) / (T_h_i - T_c_i)
     elif abs(C_min - C_c) < EPS:
         return abs(T_c_i - T_c_o) / (T_h_i - T_c_i)
-'''
 
 def c_ratio(m_h, m_c, c_p):
     return get_C_min(m_h, m_c, c_p) / get_C_max(m_h, m_c, c_p) 
