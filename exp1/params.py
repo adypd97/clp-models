@@ -12,16 +12,49 @@ F_h      T_h_i      T_h_o | F_c      T_c_i       T_c_o
 
 Repeat for different F_h/F_c and DTC
 '''
-
 # Known Parameters
 L = 0.75 # meters (length of tube)
 N = 23   # number of tubes
 D_o = 0.016 # meters (outer diameter of tubes)
 D_i = 0.013 # meters (inner diameter of tubes)
-T_h_i = [58.2, 57.7, 57.7, 57.8]
-T_h_o = [38.6, 34.1, 35.6, 36.8]
-T_c_i = [19.7, 16.8, 17.0, 17.3]
-T_c_o = [39.7, 35.5, 37.0, 38.2]
+c_p = 4180 # constant (assumed), J/Kg*K
+rho = 998  # water, kg/m^3
+
+
+# Variables (Control) Parameters
+DTC = 60    # hot water temperature (inlet)
+CWT = 20    # cold water temperature (inlet)
+m_h = 75   # flow rate for hot water  (kg/s) (check TODO)
+m_c = 50   # flow rate for cold water (kg/s) (check TODO)
+
+'''
+Generate inlet stream temperatures, outlet stream temperatures,
+and DTC 
+'''
+import random
+
+def data(avg, std, n=100):
+    ''' 
+    TODO: Is this reasonable?
+    Data generation function based
+    on Gaussian Probability Distribution
+    '''
+    return [ random.gauss(avg, std) for i in range(n) ]
+
+def gen_T_h_i(T):
+    error = 1       # 1% error
+    return data(T, error)
+
+def gen_T_c_i(T):
+    error = 1       # 1% error
+    return data(T, error)
+
+def gen_T_o(T_th):
+    error = 20     # 10% error
+    return data(T_th, error)
+
+T_h_i = gen_T_h_i(DTC) # TODO : automate
+T_c_i = gen_T_c_i(CWT)
 
 '''
 c_p = { 0.01 : 4.2199,
@@ -39,8 +72,3 @@ c_p = { 0.01 : 4.2199,
                         # at temperature Celsius(key), units
                         # kJ/(kg K)
 '''
-c_p = 4180 # constant (assumed), J/Kg*K
-
-rho = 998  # water, kg/m^3
-m_h = 75   # flow rate for hot water  (kg/s)
-m_c = 50   # flow rate for cold water (kg/s)
