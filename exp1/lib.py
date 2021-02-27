@@ -25,24 +25,46 @@ def LMTD(T1, T2, T3, T4):
 def A(D,N,L):
     return math.pi * D * N * L
     
-def correction_params(T_c_i, T_c_o, T_h_i, T_h_o, flag=1):
-    r = round(abs((T_h_o - T_h_i)/(T_c_i - T_c_o)), 2)
-    p = round(abs((T_c_o - T_c_i) / (T_h_i - T_c_i)), 2)
-    if flag :
-        return r
-    else:
-        return p
+def correction_params(T_c_i, T_c_o, T_h_i, T_h_o):
+    try:
+        r = round(abs((T_h_o - T_h_i)/(T_c_i - T_c_o)), 2)
+        p = round(abs((T_c_o - T_c_i) / (T_h_i - T_c_i)), 2)
+    except ZeroDivisionError:
+        return None, None
+    return r, p
+
+def get_S_for_F(r):
+    return math.sqrt( r**2 + 1 ) / ( R - 1 )
+
+def get_W_for_F(r, p):
+    return ( 1 - p*r ) / ( 1 - p )
+
+def get_Wo_for_F(p):
+    return 1 - p 
 
 def get_F(T_h_i, T_c_i, T_h_o, T_c_o):
-    pass
+    '''
+    LINK TO EQUATIONS : https://www.wolframcloud.com/objects/demonstrations/CorrectionFactorForShellAndTubeHeatExchanger-source.nb
+    '''
+    r, p = correction_params(T_c_i, T_c_o, T_h_i, T_h_o)
+    if r == p == None:
+        return 0.5
+
+    if r < 1:
+        S = get_S_for_F(r)
+        W = get_W_for_F(r, p)
+        return S * math.log(W) / math.log( ( 1 + W - S + S*W ) \
+                / ( 1 + W + S - S*W ))
+    else:
+        Wo = get_Wo_for_F(p)
+        r2 = math.sqrt(2)
+        return ( r2 * ( 1 - Wo ) / Wo ) / ( math.log( \
+               (Wo / ( 1 - Wo) + 1 / r2) / ( Wo / ( 1 - Wo ) - 1 / r2)) )
+
 
 def U(m, c, T_h_i, T_c_i, T_h_o, T_c_o, D, N, L):
     ''' Heat Transfer Coefficient (U)'''
-    # TODO: r and p are incorrect (both > 1)  -- Corrected (r can be more than 1, p corrected)
-    #r = correction_params(T_c_in , T_c_out,  T_h_out, T_h_in)
-    #p = correction_params(T_c_in , T_c_out,  T_h_out, T_h_in, 0)
-    F = 0.5 #get_F(T_h_i, T_c_i, T_o)
-
+    F = get_F(T_h_i, T_c_i, T_h_o, T_c_o)
     return round(abs(Q(m, c, T_h_i, T_h_o) / (F * A(D, N, L)  \
             * LMTD(T_h_i, T_h_o, T_c_i, T_c_o))), 2)
 
