@@ -42,5 +42,5 @@ c_p = { 0.01 : 4.2199,
 c_p = 4180 # constant (assumed), J/Kg*K
 
 rho = 998  # water, kg/m^3
-m_h = 0.075 * rho  # flow rate for hot water  (kg/s)
-m_c = 0.050 * rho  # flow rate for cold water (kg/s)
+m_h = 75   # flow rate for hot water  (kg/s)
+m_c = 50   # flow rate for cold water (kg/s)
