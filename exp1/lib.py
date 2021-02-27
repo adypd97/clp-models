@@ -19,8 +19,12 @@ def find_T_o(m_h, m_c, T_h_i, T_c_i):
 '''
 DEPRECIATE
 '''
-def LMTD(T1, T2, T3, T4):
-    return (T1 - T3 - T2 + T4)/ math.log(abs((T1 - T3)/(T2 - T4)))
+def LMTD(T1, T2):
+    '''
+    If both liquids are same
+    delta_T_m = delta_T_h = delta_T_c
+    '''
+    return T1 - T2
 
 def A(D,N,L):
     return math.pi * D * N * L
@@ -34,7 +38,7 @@ def correction_params(T_c_i, T_c_o, T_h_i, T_h_o):
     return r, p
 
 def get_S_for_F(r):
-    return math.sqrt( r**2 + 1 ) / ( R - 1 )
+    return math.sqrt( r**2 + 1 ) / ( r - 1 )
 
 def get_W_for_F(r, p):
     return ( 1 - p*r ) / ( 1 - p )
@@ -64,9 +68,10 @@ def get_F(T_h_i, T_c_i, T_h_o, T_c_o):
 
 def U(m, c, T_h_i, T_c_i, T_h_o, T_c_o, D, N, L):
     ''' Heat Transfer Coefficient (U)'''
+    print(f'T_h_i = {T_h_i}, T_c_i = {T_c_i} T_h_o = {T_h_o} T_c_o = {T_c_o}')
     F = get_F(T_h_i, T_c_i, T_h_o, T_c_o)
-    return round(abs(Q(m, c, T_h_i, T_h_o) / (F * A(D, N, L)  \
-            * LMTD(T_h_i, T_h_o, T_c_i, T_c_o))), 2)
+    return round(abs(Q(m, c, T_c_i, T_c_o) / (F * A(D, N, L)  \
+            * LMTD(T_c_i, T_c_o))), 2)
 
 def C(m, c_p):
     return m * c_p
