@@ -11,7 +11,7 @@ def show(x, y, title='Avg Overall Heat Transfer Coeff of Exchanger vs DTC', xlab
     plt.ylabel(ylabel)
     plt.grid(True)
     plt.plot(x, y)
-    plt.legend(['x axis: DTC [20, 90] (C)'])
+    plt.legend(['x axis: Hot Fluid Flow rate (LPH)'])
     plt.title(title)
     plt.savefig('./results/' + saveas)
     plt.show()
@@ -24,9 +24,9 @@ def output(dtc, _U, _e, T_h_i, T_h_o, T_c_o, T_c_i):
     for i in range(len(T_h_i)):
         print("{0:3d}   {1:.2f}    {2:.2f}   {3:.2f}   {4:.2f}".format(i, T_h_i[i], T_h_o[i], T_c_i[i], T_c_o[i]))
 
-def run(T, T_h_i, T_c_i, T_h_o, T_c_o, dtc, flag=1):
+def run(T, T_h_i, T_c_i, T_h_o, T_c_o, dtc, m=0, flag=1):
     _U  = list(map(lambda w, x, y, z: U(m_c, c_p, w, x, y, z, D_o, N, L), T_h_i, T_c_i, T_h_o, T_c_o))
-    _e  = list(map(lambda w, x, y, z: effectiveness(m_h, m_c, c_p, w, x, y, z), T_h_i, T_h_o, T_c_i, T_c_o))
+    _e  = list(map(lambda w, x, y, z: effectiveness(m, m_c, c_p, w, x, y, z), T_h_i, T_h_o, T_c_i, T_c_o))
     output(dtc, _U, _e, T_h_i, T_h_o, T_c_o, T_c_i)
     if flag:
         return sum(_U) / len(_U)
@@ -34,29 +34,30 @@ def run(T, T_h_i, T_c_i, T_h_o, T_c_o, dtc, flag=1):
         return sum(_e) / len(_e)
 
 
-def main(DTC):
+def main(DTC, m_h):
     # theoretical outlet temperatures
     avg_U = list()
     avg_e = list()
-    for dtc in DTC:
-        T_th = find_T_o(m_h, m_c, dtc, CWT)
+    dtc = DTC
+    for m in m_h:
+        T_th = find_T_o(m, m_c, dtc, CWT)
         T_h_i = gen_T_h_i(dtc)
         T_c_i = gen_T_c_i(CWT)
         T_h_o = gen_T_o(T_th)
         T_c_o = gen_T_o(T_th)
         avg_U.append(run(T_th, T_h_i, T_c_i, T_h_o, T_c_o, dtc))
-        avg_e.append(run(T_th, T_h_i, T_c_i, T_h_o, T_c_o, dtc, flag=0))
-    show(DTC, avg_U, title='Avg Overall Heat Transfer Coeff vs DTC (m_h=75LPH, m_c=50LPH)', xlabel='DTC (C)', saveas='UvsDTC.png')
-    show(DTC, avg_e, title='Avg Effectiveness of Exchanger vs DTC (m_h=75LPH, m_c=50LPH)', xlabel='DTC (C)', ylabel='Avg e', saveas='evsDTC.png')
+        avg_e.append(run(T_th, T_h_i, T_c_i, T_h_o, T_c_o, dtc, m, flag=0))
+    show(m_h, avg_U, title='Avg Overall Heat Transfer Coeff vs Hot Fluid Flow rate (DTC=60C)', xlabel='m_h(LPH)', saveas='Uvsm_h.png')
+    show(m_h, avg_e, title='Avg Effectiveness of Exchanger vs Hot Fluid Flow rate (DTC=60C)', xlabel='m_h (LPH)', ylabel='Avg e', saveas='evsm_h.png')
 
 
 if __name__ == "__main__":
     # Variables (Control) Parameters
     CWT = 20    # cold water temperature (inlet)
-    DTC = [ i for i in range(90, CWT, -1) ]     # hot water temperature (inlet)
-    #DTC = 60
+    #DTC = [ i for i in range(90, CWT, -1) ]     # hot water temperature (inlet)
+    DTC = 60
     m_h = 75
-    #m_h = [ i for i in range(75, 0, -1) ] #75   # flow rate for hot water  (kg/s) (check TODO)
+    m_h = [ i for i in range(75, 0, -1) ] #75   # flow rate for hot water  (kg/s) (check TODO)
     m_c = 50   # flow rate for cold water (kg/s) (check TODO)
     #m_c = [ i for i in range(1, 75, 1) ] #75   # flow rate for hot water  (kg/s) (check TODO)
-    main(DTC)
+    main(DTC, m_h)
