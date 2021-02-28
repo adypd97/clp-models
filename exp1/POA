@@ -2,8 +2,11 @@
 2. find T_f From the balance equation.
 3. Now, calculate U and effectiveness.
 4. These are theoretical values. We compare to this
-5. Assume a 15% error margin on final temperatures (of the outlets)
-6. Compute new U and effectiveness values.
-7. Compare them to the theoretical values.
+==== DONE ====
 
-Now repeat 1-7 for different flow rates and DTC temperatures.
+==== TODO ====
+1. Pick an appropriate error distribution (cross check with value like effectiveness (always < 1))
+2. Compute U and e 
+3. F correction factor
+
+Now repeat 1-7 for different flow rates and DTC, CWT temperatures.

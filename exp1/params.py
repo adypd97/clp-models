@@ -21,40 +21,32 @@ c_p = 4180 # constant (assumed), J/Kg*K
 rho = 998  # water, kg/m^3
 
 
-# Variables (Control) Parameters
-DTC = 60    # hot water temperature (inlet)
-CWT = 20    # cold water temperature (inlet)
-m_h = 75   # flow rate for hot water  (kg/s) (check TODO)
-m_c = 50   # flow rate for cold water (kg/s) (check TODO)
-
 '''
 Generate inlet stream temperatures, outlet stream temperatures,
 and DTC 
 '''
 import random
 
-def data(avg, std, n=100):
-    ''' 
-    TODO: Is this reasonable?
-    Data generation function based
-    on Gaussian Probability Distribution
-    '''
-    return [ random.gauss(avg, std) for i in range(n) ]
+def data(lb, ub, n=100, dist=random.uniform):
+    return [ dist(lb, ub) for _ in range(n) ]
 
 def gen_T_h_i(T):
-    error = 1       # 1% error
-    return data(T, error)
+    error = 0.01       # 1% error
+    ub = T
+    lb = T - error*T
+    return data(lb, ub)
 
 def gen_T_c_i(T):
-    error = 1       # 1% error
-    return data(T, error)
+    error = 0.01       # 1% error
+    ub = T
+    lb = T - error*T
+    return data(lb, ub)
 
 def gen_T_o(T_th):
-    error = 20     # 10% error
-    return data(T_th, error)
+    error = 0.1     # 10% error
+    lb = T_th - error*T_th
+    return data(lb, 10*error, dist=random.gauss)
 
-T_h_i = gen_T_h_i(DTC) # TODO : automate
-T_c_i = gen_T_c_i(CWT)
 
 '''
 c_p = { 0.01 : 4.2199,
