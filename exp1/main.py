@@ -12,7 +12,7 @@ def show(x, y, title='Avg Overall Heat Transfer Coeff of Exchanger vs DTC', xlab
     plt.ylabel(ylabel)
     plt.grid(True)
     plt.plot(x, y)
-    plt.legend(['x axis: Flow rate [50, 100] LPH'])
+    plt.legend(['x axis: Flow rate [50, 100] LPH, Cold Liquid Flow rate : 50 LPH'])
     plt.savefig('./results/' + saveas)
     plt.show()
 
@@ -40,8 +40,8 @@ def main(DTC, m_h):
         T_c_o = gen_T_o(T_th)
         avg_U.append(run(T_th, T_h_i, T_c_i, T_h_o, T_c_o, dtc, m))
         avg_e.append(run(T_th, T_h_i, T_c_i, T_h_o, T_c_o, dtc, m, flag=0))
-    show(m_h, avg_U, title='Avg Overall Heat Transfer Coeff vs Hot Liquid Flow Rate', xlabel='m_h', saveas='Uvsm_h.png')
-    show(m_h, avg_e, title='Avg Effectiveness of Exchanger vs Hot Liquid Flow Rate', xlabel='m_h', ylabel='Avg e', saveas='evsm_h.png')
+    show(m_h, avg_U, title='Avg Overall Heat Transfer Coeff vs Hot Liquid Flow Rate (DTC=50C)', xlabel='m_h', saveas='Uvsm_h.png')
+    show(m_h, avg_e, title='Avg Effectiveness of Exchanger vs Hot Liquid Flow Rate (DTC=50C)', xlabel='m_h', ylabel='Avg e', saveas='evsm_h.png')
 
 
 if __name__ == "__main__":
