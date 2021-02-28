@@ -16,11 +16,18 @@ def show(x, y, title='Avg Overall Heat Transfer Coeff of Exchanger vs DTC', xlab
     plt.savefig('./results/' + saveas)
     plt.show()
 
+def output(dtc, _U, _e, T_h_i, T_h_o, T_c_o, T_c_i):
+    print("DTC: {0} , AVERAGE U: {1:.2f}".format(dtc, sum(_U) / len(_U)))
+    print("========")
+    print("DTC: {0} , AVERAGE e: {1:.2f}".format(dtc, sum(_e) / len(_e)))
+    print("No.  T_h_i    T_h_o   T_c_i   T_c_o")
+    for i in range(len(T_h_i)):
+        print("{0:3d}   {1:.2f}    {2:.2f}   {3:.2f}   {4:.2f}".format(i, T_h_i[i], T_h_o[i], T_c_i[i], T_c_o[i]))
+
 def run(T, T_h_i, T_c_i, T_h_o, T_c_o, dtc, flag=1):
     _U  = list(map(lambda w, x, y, z: U(m_c, c_p, w, x, y, z, D_o, N, L), T_h_i, T_c_i, T_h_o, T_c_o))
     _e  = list(map(lambda w, x, y, z: effectiveness(m_h, m_c, c_p, w, x, y, z), T_h_i, T_h_o, T_c_i, T_c_o))
-    #print("DTC: {0} , AVERAGE U: {1:.2f}".format(dtc, sum(_U) / len(_U)))
-    #print("DTC: {0} , AVERAGE e: {1:.2f}".format(dtc, sum(_e) / len(_e)))
+    output(dtc, _U, _e, T_h_i, T_h_o, T_c_o, T_c_i)
     if flag:
         return sum(_U) / len(_U)
     else:

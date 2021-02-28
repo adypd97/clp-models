@@ -7,7 +7,7 @@ import math
 from params import *
 
 def Q(m, c, T_in, T_out):
-    return m * c * abs(T_out - T_in) 
+    return (m * c * abs(T_out - T_in)) * 2.78e-4 
 
 def find_T_o(m_h, m_c, T_h_i, T_c_i):
     ''' return T_o (for both streams)
