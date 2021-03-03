@@ -1,0 +1,9 @@
+Vapor Refrigeration Cycle
+--
+
+Goal is to maintain a low temperature system by rejecting heat 
+from it to the surrounding (which would be at a higher temperature).
+
+2nd Law of Thermodynamics prohibits doing this without doing work.
+A Vapor Refrigeration cycle is used to achieve that.
+
