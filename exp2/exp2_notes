@@ -7,3 +7,56 @@ from it to the surrounding (which would be at a higher temperature).
 2nd Law of Thermodynamics prohibits doing this without doing work.
 A Vapor Refrigeration cycle is used to achieve that.
 
+
+Parts
+--
+
+1. Compressor
+2. Condensor
+3. Expansion Valve
+4. Evaporator / Refrigerated Space (where we cool objects)
+
+
+Cycle:
+	=>           
+	+---- Compressor -------+
+	|			|
+	|			|
+	|			|
+	|			|
+   Evaporator              Condensor
+	|			|
+	|			|
+	|			|
+	|			|
+	+---- Expansion  -------+
+			      <=
+
+COP of refridgerator is defined as = heat absorbed by refridgerant / work done
+				   = Q_a / W_in
+
+
+Questions:
+--
+
+1. How long do I need to wait to achieve a 10/15/20C etc. change in evaporator?
+2. How much would that cost?
+3. Also, How much water can I cool in that period?
+
+Context:
+--
+	Lets say you are a cold water supply company:
+	Your input water comes from an open lake nearby at X degree celcius (it can vary) and
+	your customer desires Y degree celcius (Y < X) of water.
+	What factors would affect your cost? And how do you achieve profitablity?
+	1. How long would the factory be functioning per day?
+	2. What is the consumption like (does it vary a lot or stays constant more or less)?
+	
+	Want to figure out:
+	1. Phrased as above, I need to know how much it will cost me to produce 
+	   at that level and temperature.
+	2. Suppose the customer is willing to pay M per kg of output (market rate, fixed), will I be
+	   profitable? How much output would I need to generate?
+	3. Now if X begins to vary, how will I adjust my output / or desired temperature?
+
+
