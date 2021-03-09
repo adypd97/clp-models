@@ -1,0 +1,17 @@
+1. Gas is not ideal -> That's a modelling error (deliberate)
+2. Gas may not be saturated
+3. The various thermodynamic processes may not be happening at is-X
+   values. (X - entropic, enthalpic etc.)
+
+Other errors because of quality of measurement (for example point estimation 
+of bulk (non-mixed) volume of liquid etc), the devices used in the cycle may
+not be 100% efficient at what they do.
+What else?
+And how relevant is one error compared to another?
+And in the given context, does it matter?
+
+All of these errors would deviate us from the ideal behavior. 
+
+So, the simulation of the values of pressures and temperatures 
+would need to introduce these errors into the values we would get 
+if the system were ideal.
