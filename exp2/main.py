@@ -21,11 +21,14 @@ def exp_COP(ref_work, comp_work):
 
 def gen_T_w(T_w_i, n):
     import random
-    return [ random.gauss(T_w_i - i, 0.5) for i in range(1, n+1) ]
+    STD = 0.5 # arbitrary
+    return [ random.gauss(T_w_i - i, STD) for i in range(1, n+1) ]
 
 def gen_I(I, n):
     import random
-    return [ random.gauss(2, 0.1) for _ in range(n) ]
+    STD = 0.1 # arbitrary
+    MEAN_CURRENT = 2  # reasonable
+    return [ random.gauss(MEAN_CURRENT, STD) for _ in range(n) ]
 
 def show_plot(x, y):
     import  matplotlib.pyplot as plt
@@ -36,20 +39,35 @@ def show_plot(x, y):
     plt.savefig('results/expCOPvscooling.png')
     plt.show()
 
-if __name__ == "__main__":
+def sim_exp_COP(T_w_i):
     # generate T_w_i, T_w, V and I
-    n = 10
+    n = 10                      # number of observations 
     V = 220                     # volts
     I = gen_I(2, n)             # Ampere
-    T_w_i = 25                  # C, initially temp warmer
+    T_w_i = T_w_i                  # C, initially temp warmer
     T_w   = gen_T_w(T_w_i, n)   # C, finally cooler after 60 seconds
     cooling = [ T_w_i - t_w for t_w in T_w ]
     comp_work = [ compressor_work(V, i) for i in I ]
     ref_work = [ refrigeration_work(T_w_i, t_w) for t_w in T_w ]
     expCOP = exp_COP(ref_work, comp_work)
-    
+
+        
+    print(f'T_w_i (initial temperature of water) = {T_w_i:.2f}')
+    print(f'Voltage = 220 V')
+    title = f'I\tT_w\tT_w_i - T_w\tCompressor Work (kW)\tRefrigerator Work (kW)\tExp COP' 
+    print("-"*( len(title) + 5*4))
+    print(title)
+    print("-"*(len(title) + 5*4))
+    for i in range(n):
+        print(f'{I[i]:4.2f}\t{T_w[i]:5.2f}\t{(T_w_i - T_w[i]):5.2f}\t\t{comp_work[i]:5.2f}\t\t\t{ref_work[i]:5.2f}\t\t\t{expCOP[i]:5.4f}')
+
+
+
     #print(f'Compressor Work : {comp_work} kW')
     #print(f'Refrigerator Work : {ref_work} kW')
     #print(f'Cooling : {cooling} kW')
     #print(f'EXP COP : {exp_COP(ref_work, comp_work)}')
     show_plot(cooling, expCOP)
+
+if __name__ == "__main__":
+    sim_exp_COP(40)
