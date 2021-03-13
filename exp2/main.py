@@ -30,6 +30,10 @@ def gen_I(I, n):
 def show_plot(x, y):
     import  matplotlib.pyplot as plt
     plt.scatter(x, y)
+    plt.xlabel('Degree of Cooling (in Centigrade)')
+    plt.ylabel('Experimental COP')
+    plt.title('Exp COP vs Degree of Cooling for r134a')
+    plt.savefig('results/expCOPvscooling.png')
     plt.show()
 
 if __name__ == "__main__":
@@ -46,6 +50,6 @@ if __name__ == "__main__":
     
     #print(f'Compressor Work : {comp_work} kW')
     #print(f'Refrigerator Work : {ref_work} kW')
-    print(f'Cooling : {cooling} kW')
-    print(f'EXP COP : {exp_COP(ref_work, comp_work)}')
+    #print(f'Cooling : {cooling} kW')
+    #print(f'EXP COP : {exp_COP(ref_work, comp_work)}')
     show_plot(cooling, expCOP)
