@@ -102,6 +102,7 @@ def sim_exp_COP(T_w_i, n):
     ref_work = [ refrigeration_work(T_w_i, t_w) for t_w in T_w ]
     expCOP = exp_COP(ref_work, comp_work)
 
+    '''
     print(f'T_w_i (initial temperature of water) = {T_w_i:.2f}')
     print(f'Voltage = 220 V')
     title = f'I\tT_w\tT_w_i - T_w\tCompressor Work (kW)\tRefrigerator Work (kW)\tExp COP' 
@@ -110,18 +111,39 @@ def sim_exp_COP(T_w_i, n):
     print("-"*(len(title) + 5*4))
     for i in range(n):
         print(f'{I[i]:4.2f}\t{T_w[i]:5.2f}\t{(T_w_i - T_w[i]):5.2f}\t\t{comp_work[i]:5.2f}\t\t\t{ref_work[i]:5.2f}\t\t\t{expCOP[i]:5.4f}')
+    '''
 
-    show_plot(cooling, expCOP)
+    #show_plot(cooling, expCOP)
+    return expCOP
 
 
 if __name__ == "__main__":
-    '''
     T_w_i = 40
+    T_r_i = 28
     n = 40
-    sim_exp_COP(T_w_i, n)
-    '''
-    print(gen_T1(28,6))
-    print(gen_T2(28, 6))
-    print(gen_T3(28, 6))
-    print(gen_T4(28, 6))
+    expCOP = sim_exp_COP(T_w_i, n)
+    
+    T1 = gen_T1(T_r_i,n)
+    #print(gen_T2(28, 6))
+    T3 = gen_T3(T_r_i, n)
+    #print(gen_T4(28, 6))
+    thCOP = []
+    for t1, t3 in zip(T1, T3):
+        thCOP.append(th_COP(t1, t3))
+
+    title = f'n\tEXP COP\t TH COP\t ERROR'
+    print(f"Initial Water Temperature (C): {T_w_i:.3f}")
+    print(f"Initial R134a Temperature (C): {T_r_i:.3f}")
+    print(f"Number of Observations       : {n}")
+    print('-'*(len(title) + 4*2))
+    print(title)
+    print('-'*(len(title) + 4*2))
+    error = []
+    i = 0
+    for e, t in zip(expCOP, thCOP):
+        print(f'{i}\t{e:6.4f}\t{t:6.4f}\t{(t - e)/t:6.4f}')
+        error.append((t-e)/e)
+        i += 1
+
+    #show_plot([i for i in range(n)], error)
 
