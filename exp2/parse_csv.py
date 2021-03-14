@@ -46,3 +46,4 @@ def show_table(d):
 if __name__ == "__main__":
     temp = table(TEMPFILE)
     pres = table(PRESFILE)
+    show_table(temp)
