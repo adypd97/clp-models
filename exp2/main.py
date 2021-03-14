@@ -102,7 +102,6 @@ def sim_exp_COP(T_w_i, n):
     ref_work = [ refrigeration_work(T_w_i, t_w) for t_w in T_w ]
     expCOP = exp_COP(ref_work, comp_work)
 
-    '''
     print(f'T_w_i (initial temperature of water) = {T_w_i:.2f}')
     print(f'Voltage = 220 V')
     title = f'I\tT_w\tT_w_i - T_w\tCompressor Work (kW)\tRefrigerator Work (kW)\tExp COP' 
@@ -111,22 +110,31 @@ def sim_exp_COP(T_w_i, n):
     print("-"*(len(title) + 5*4))
     for i in range(n):
         print(f'{I[i]:4.2f}\t{T_w[i]:5.2f}\t{(T_w_i - T_w[i]):5.2f}\t\t{comp_work[i]:5.2f}\t\t\t{ref_work[i]:5.2f}\t\t\t{expCOP[i]:5.4f}')
-    '''
 
     #show_plot(cooling, expCOP)
-    return expCOP
+    return expCOP, T_w, I
 
 
 if __name__ == "__main__":
     T_w_i = 40
     T_r_i = 28
+    pi = 5     # MPa
     n = 40
-    expCOP = sim_exp_COP(T_w_i, n)
-    
+    V = 220
+    expCOP, T6, I = sim_exp_COP(T_w_i, n)
+    P1, P2 = gen_P(pi, n)
     T1 = gen_T1(T_r_i,n)
-    #print(gen_T2(28, 6))
+    T2 = gen_T2(T_r_i, n)
     T3 = gen_T3(T_r_i, n)
-    #print(gen_T4(28, 6))
+    T4 = gen_T4(T_r_i, n)
+    
+    title_1 = f'P1\tP2\tT1\tT2\tT3\tT4\tT6\t  V  \tI'
+    print("-"*(len(title_1) + 8*5))
+    print(title_1)
+    print("-"*(len(title_1) + 8*5))
+    for i in range(n):
+        print(f'{P1[i]:4.2f}\t{P2[i]:4.2f}\t{T1[i]:4.2f}\t{T2[i]:4.2f}\t{T3[i]:4.2f}\t{T4[i]:4.2f}\t{T6[i]:4.2f}\t{V:4d}\t{I[i]:4.2f}')
+
     thCOP = []
     for t1, t3 in zip(T1, T3):
         thCOP.append(th_COP(t1, t3))
