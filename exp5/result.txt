@@ -1,0 +1,7 @@
+All numbers are in S.I. units
+Brass Fourier No.          : 4.978508533042847
+Steel Fourier No.          : 1.0922641932590027
+Brass Biot No.             : 0.4877126514555515
+Steel Biot No.             : 2.581906560950407
+Brass Heat Transfer Coeff. : 742.4867277142766
+Steel Heat Transfer Coeff. : 812.1193022597276
